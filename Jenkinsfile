@@ -34,7 +34,6 @@ pipeline {
 
       stage('SonarQube Analysis') {
         steps {
-          def mvn = tool 'Default Maven';
           withSonarQubeEnv(installationName: 'My SonarQube Server', credentialsId: 'sonarqube-creds') { 
             sh "mvn clean verify sonar:sonar -Dsonar.projectKey=oscarplayground -Dsonar.projectName='oscarplayground'"
           }
