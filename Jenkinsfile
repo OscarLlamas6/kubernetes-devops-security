@@ -34,7 +34,7 @@ pipeline {
 
       stage('SonarQube Analysis') {
         steps {
-          withSonarQubeEnv(installationName: 'My SonarQube Server', credentialsId: 'sonarqube-creds') { 
+          withSonarQubeEnv(installationName: 'oscarplayground-sonarqube') { 
             sh "mvn clean verify sonar:sonar -Dsonar.projectKey=oscarplayground -Dsonar.projectName='oscarplayground'"
           }
         }
