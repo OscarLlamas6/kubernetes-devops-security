@@ -42,12 +42,18 @@ pipeline {
 
       stage('Vulnerability Scan') {
         steps {
-          sh "mvn dependency-check:check"
+            withCredentials([string(credentialsId: 'depcheck-oscarplayground', variable: 'NVD_API_KEY')]) {
+                sh """
+                    mvn org.owasp:dependency-check-maven:8.4.0:check \
+                    -Dnvd.api.key=\$NVD_API_KEY \
+                    -Dformat=XML
+                """
+            }
         }
         post {
-          always {
-            dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-          }
+            always {
+                dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+            }
         }
       }
 
