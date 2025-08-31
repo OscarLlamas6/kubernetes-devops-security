@@ -34,9 +34,7 @@ pipeline {
 
       stage('SonarQube Analysis') {
         steps {
-          withSonarQubeEnv() {
             sh "mvn clean verify sonar:sonar -Dsonar.projectKey=oscarplayground -Dsonar.projectName='oscarplayground'"
-          }
         }
       }
 
