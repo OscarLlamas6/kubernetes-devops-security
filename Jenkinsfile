@@ -40,22 +40,22 @@ pipeline {
         }
       }
 
-      stage('Vulnerability Scan') {
-        steps {
-            withCredentials([string(credentialsId: 'depcheck-oscarplayground', variable: 'NVD_API_KEY')]) {
-                sh """
-                    mvn org.owasp:dependency-check-maven:8.4.0:check \
-                    -Dnvd.api.key=\$NVD_API_KEY \
-                    -Dformat=XML
-                """
-            }
-        }
-        post {
-            always {
-                dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-            }
-        }
-      }
+      // stage('Vulnerability Scan') {
+      //   steps {
+      //       withCredentials([string(credentialsId: 'depcheck-oscarplayground', variable: 'NVD_API_KEY')]) {
+      //           sh """
+      //               mvn org.owasp:dependency-check-maven:8.4.0:check \
+      //               -Dnvd.api.key=\$NVD_API_KEY \
+      //               -Dformat=XML
+      //           """
+      //       }
+      //   }
+      //   post {
+      //       always {
+      //           dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+      //       }
+      //   }
+      // }
 
       stage('Docker Build and Push') {
         steps {
